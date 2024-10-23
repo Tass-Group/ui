@@ -64,9 +64,7 @@ jobs:
             git config --global user.name $GIT_NAME
       - run:
           name: Run release
-          command: |
-            npm run release
-            git push --follow-tags "https://github.com/Tass-Group/ui" main
+          command: npm run release
   publish_to_npm:
     executor: node/default
     description: Publish to npm
@@ -75,17 +73,9 @@ jobs:
       - node/install-packages
       - run:
           name: Check if npm version is the same and publish to npm
-          command: |
-            CURRENT_VERSION=$(npm show @ui/tass-group version)
-            LOCAL_VERSION=$(node -pe "require('./package.json').version")
-
-            if [ "$CURRENT_VERSION" != "$LOCAL_VERSION" ]; then
-              echo "Versions are different. Publishing to npm."
-              echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-              npm publish
-            else
-              echo "Versions are the same. Skipping npm publish."
-            fi
+          command: npm publish
+          environment:
+            NPM_TOKEN: $NPM_TOKEN
 workflows:
   build_app:
     jobs:
