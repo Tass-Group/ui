@@ -66,7 +66,7 @@ jobs:
           name: Run release
           command: |
             npm run release
-            git push --follow-tags "https://${GH_TOKEN}@github.com/imran-codes/react-component-library.git" main
+            git push --follow-tags "https://github.com/Tass-Group/ui" main
   publish_to_npm:
     executor: node/default
     description: Publish to npm
@@ -76,7 +76,7 @@ jobs:
       - run:
           name: Check if npm version is the same and publish to npm
           command: |
-            CURRENT_VERSION=$(npm show imran-codes-react-component-library version)
+            CURRENT_VERSION=$(npm show @ui/tass-group version)
             LOCAL_VERSION=$(node -pe "require('./package.json').version")
 
             if [ "$CURRENT_VERSION" != "$LOCAL_VERSION" ]; then
