@@ -1,6 +1,7 @@
 {
   "name": "@ui/tass-group",
   "version": "0.0.1",
+  "private": false,
   "description": "a react component library",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
