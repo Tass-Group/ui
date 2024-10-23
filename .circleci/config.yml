@@ -71,6 +71,9 @@ jobs:
     steps:
       - checkout
       - node/install-packages
+      - run: 
+          name: Login to npm
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       - run:
           name: Check if npm version is the same and publish to npm
           command: npm publish
