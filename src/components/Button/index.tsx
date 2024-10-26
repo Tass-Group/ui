@@ -7,10 +7,17 @@ const Button: React.FC<ButtonProps> = ({
   type = "default",
   size = "medium",
   shape = "square",
+  disabled = false,
   ...rest
 }) => {
   return (
-    <StyledButton type={type} size={size} shape={shape} {...rest}>
+    <StyledButton
+      type={type}
+      size={size}
+      shape={shape}
+      disabled={disabled}
+      {...rest}
+    >
       {title}
     </StyledButton>
   );
