@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { type PageProps } from "./types";
 import { Container } from "./styled";
 
