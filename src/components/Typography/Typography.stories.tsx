@@ -1,0 +1,193 @@
+import Typography from "./index";
+import { type ParagraphProps, type TextProps, type TitleProps } from "./types";
+
+export default {
+  title: "MyComponents/Typography",
+  component: Typography,
+  parameters: {
+    layout: "centered"
+  },
+  tags: ["autodocs"],
+  argTypes: {
+    // Typography Title API
+    level: {
+      description: "Sets the heading level for the Typography.Title component.",
+      table: {
+        category: "Typography.Title",
+        defaultValue: { summary: 1 }
+      }
+    },
+
+    // Typography Text API
+    strong: {
+      description: "Displays text in bold.",
+      table: {
+        category: "Typography.Text",
+        defaultValue: { summary: false }
+      }
+    },
+    italic: {
+      description: "Displays text in italic.",
+      table: {
+        category: "Typography.Text",
+        defaultValue: { summary: false }
+      }
+    },
+    underline: {
+      description: "Underlines the text.",
+      table: {
+        category: "Typography.Text",
+        defaultValue: { summary: false }
+      }
+    },
+    delete: {
+      description: "Strikes through the text.",
+      table: {
+        category: "Typography.Text",
+        defaultValue: { summary: false }
+      }
+    },
+    code: {
+      description: "Formats the text as inline code.",
+      table: {
+        category: "Typography.Text",
+        defaultValue: { summary: false }
+      }
+    },
+    mark: {
+      description: "Highlights the text.",
+      table: {
+        category: "Typography.Text",
+        defaultValue: { summary: false }
+      }
+    },
+    keyboard: {
+      description: "Formats the text to look like keyboard input.",
+      table: {
+        category: "Typography.Text",
+        defaultValue: { summary: false }
+      }
+    },
+
+    // Typography Paragraph API
+    blockquote: {
+      description: "Displays the paragraph as a blockquote.",
+      table: {
+        category: "Typography.Paragraph",
+        defaultValue: { summary: false }
+      }
+    }
+  }
+};
+
+export const DefaultTypography = {
+  render: () => (
+    <Typography>
+      <Typography.Title>Title</Typography.Title>
+      <Typography.Text>Text</Typography.Text>
+      <Typography.Paragraph>Paragraph</Typography.Paragraph>
+    </Typography>)
+};
+
+// TypographyTitle Story
+export const TypographyTitle = {
+  argTypes: {
+    level: {
+      description: "Sets the heading level for the Typography.Title component.",
+      control: { type: "number", min: 1, max: 5 },
+      table: {
+        category: "Typography.Title",
+        defaultValue: { summary: 1 }
+      }
+    }
+  },
+  render: (args: TitleProps) => (
+    <Typography>
+      <Typography.Title {...args}>Dynamic Heading</Typography.Title>
+      <Typography.Title level={2}>h2. Heading 2</Typography.Title>
+      <Typography.Title level={3}>h3. Heading 3</Typography.Title>
+      <Typography.Title level={4}>h4. Heading 4</Typography.Title>
+      <Typography.Title level={5}>h5. Heading 5</Typography.Title>
+    </Typography>
+  ),
+  args: {
+    level: 1
+  }
+};
+
+// TypographyText Story
+export const TypographyText = {
+  argTypes: {
+    strong: {
+      description: "Displays text in bold.",
+      control: { type: "boolean" },
+      table: { category: "Typography.Text", defaultValue: { summary: false } }
+    },
+    italic: {
+      description: "Displays text in italic.",
+      control: { type: "boolean" },
+      table: { category: "Typography.Text", defaultValue: { summary: false } }
+    },
+    underline: {
+      description: "Underlines the text.",
+      control: { type: "boolean" },
+      table: { category: "Typography.Text", defaultValue: { summary: false } }
+    },
+    delete: {
+      description: "Strikes through the text.",
+      control: { type: "boolean" },
+      table: { category: "Typography.Text", defaultValue: { summary: false } }
+    },
+    code: {
+      description: "Formats the text as inline code.",
+      control: { type: "boolean" },
+      table: { category: "Typography.Text", defaultValue: { summary: false } }
+    },
+    mark: {
+      description: "Highlights the text.",
+      control: { type: "boolean" },
+      table: { category: "Typography.Text", defaultValue: { summary: false } }
+    },
+    keyboard: {
+      description: "Formats the text to look like keyboard input.",
+      control: { type: "boolean" },
+      table: { category: "Typography.Text", defaultValue: { summary: false } }
+    }
+  },
+  render: (args: TextProps) => (
+    <Typography>
+      <Typography.Text {...args}>Dynamic Text</Typography.Text>
+    </Typography>
+  ),
+  args: {
+    strong: false,
+    italic: false,
+    underline: false,
+    delete: false,
+    code: false,
+    mark: false,
+    keyboard: false
+  }
+};
+
+// TypographyParagraph Story
+export const TypographyParagraph = {
+  argTypes: {
+    blockquote: {
+      description: "Displays the paragraph as a blockquote.",
+      control: { type: "boolean" },
+      table: {
+        category: "Typography.Paragraph",
+        defaultValue: { summary: false }
+      }
+    }
+  },
+  render: (args: ParagraphProps) => (
+    <Typography>
+      <Typography.Paragraph {...args}>This is a dynamic paragraph.</Typography.Paragraph>
+    </Typography>
+  ),
+  args: {
+    blockquote: false
+  }
+};
