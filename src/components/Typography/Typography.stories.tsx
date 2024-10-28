@@ -99,11 +99,26 @@ export const TypographyTitle = {
         category: "Typography.Title",
         defaultValue: { summary: 1 }
       }
+    },
+    children: {
+      description: "The content of the Typography.Title component.",
+      control: { type: "text" },
+      table: { category: "Typography.Title" }
+    },
+    ellipsis: {
+      description: "Truncates the text with an ellipsis.",
+      control: { type: "boolean" },
+      table: { category: "Typography.Title", defaultValue: { summary: true } }
+    },
+    width: {
+      description: "Sets the width of the Typography.Title component.",
+      control: { type: "text" },
+      table: { category: "Typography.Title" }
     }
   },
   render: (args: TitleProps) => (
     <Typography>
-      <Typography.Title {...args}>Dynamic Heading</Typography.Title>
+      <Typography.Title {...args}>{args.children}</Typography.Title>
       <Typography.Title level={2}>h2. Heading 2</Typography.Title>
       <Typography.Title level={3}>h3. Heading 3</Typography.Title>
       <Typography.Title level={4}>h4. Heading 4</Typography.Title>
@@ -111,7 +126,11 @@ export const TypographyTitle = {
     </Typography>
   ),
   args: {
-    level: 1
+    level: 1,
+    children: "Typography Title",
+    ellipsis: true,
+    width: "300px"
+
   }
 };
 
@@ -152,11 +171,26 @@ export const TypographyText = {
       description: "Formats the text to look like keyboard input.",
       control: { type: "boolean" },
       table: { category: "Typography.Text", defaultValue: { summary: false } }
+    },
+    children: {
+      description: "The content of the Typography.Text component.",
+      control: { type: "text" },
+      table: { category: "Typography.Text" }
+    },
+    ellipsis: {
+      description: "Truncates the text with an ellipsis.",
+      control: { type: "boolean" },
+      table: { category: "Typography.Text", defaultValue: { summary: true } }
+    },
+    width: {
+      description: "Sets the width of the Typography.Text component.",
+      control: { type: "text" },
+      table: { category: "Typography.Text" }
     }
   },
   render: (args: TextProps) => (
     <Typography>
-      <Typography.Text {...args}>Dynamic Text</Typography.Text>
+      <Typography.Text {...args}>{args.children}</Typography.Text>
     </Typography>
   ),
   args: {
@@ -166,7 +200,11 @@ export const TypographyText = {
     delete: false,
     code: false,
     mark: false,
-    keyboard: false
+    keyboard: false,
+    children: "Typography Text",
+
+    ellipsis: true,
+    width: "300px"
   }
 };
 
@@ -180,14 +218,32 @@ export const TypographyParagraph = {
         category: "Typography.Paragraph",
         defaultValue: { summary: false }
       }
+    },
+    children: {
+      description: "The content of the Typography.Paragraph component.",
+      control: { type: "text" },
+      table: { category: "Typography.Paragraph" }
+    },
+    ellipsis: {
+      description: "Truncates the text with an ellipsis.",
+      control: { type: "boolean" },
+      table: { category: "Typography.Paragraph", defaultValue: { summary: true } }
+    },
+    width: {
+      description: "Sets the width of the Typography.Paragraph component.",
+      control: { type: "text" },
+      table: { category: "Typography.Paragraph" }
     }
   },
   render: (args: ParagraphProps) => (
     <Typography>
-      <Typography.Paragraph {...args}>This is a dynamic paragraph.</Typography.Paragraph>
+      <Typography.Paragraph {...args}>{args.children}</Typography.Paragraph>
     </Typography>
   ),
   args: {
-    blockquote: false
+    blockquote: false,
+    children: "Typography Paragraph",
+    ellipsis: true,
+    width: "300px"
   }
 };
