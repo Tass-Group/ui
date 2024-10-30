@@ -1,0 +1,24 @@
+.icon-grid-container {
+  padding: 20px;
+}
+
+.icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: start; 
+}
+
+.icon-grid-item {
+  text-align: center;
+  width: 100px; 
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+.icon-grid-item:hover {
+  background-color: #f0f0f0;
+}
