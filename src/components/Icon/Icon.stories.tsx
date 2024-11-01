@@ -57,6 +57,11 @@ export const ColoredIcon = {
 export const AllIcons = {
   render: () => <IconLabelPage />,
   parameters: {
-    controls: { disable: true }
+    controls: { disable: true },
+    docs: {
+      source: {
+        code: null
+      }
+    }
   }
 };

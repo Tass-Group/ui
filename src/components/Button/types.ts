@@ -8,4 +8,5 @@ export interface ButtonProps {
   color?: string
   size?: "small" | "medium" | "large"
   shape?: "circle" | "round" | "square"
+  style?: React.CSSProperties
 }

@@ -86,7 +86,21 @@ export const DefaultTypography = {
       <Typography.Title>Title</Typography.Title>
       <Typography.Text>Text</Typography.Text>
       <Typography.Paragraph>Paragraph</Typography.Paragraph>
-    </Typography>)
+    </Typography>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<Typography>
+  <Title>Title</Title>
+  <Text>Text</Text>
+  <Paragraph>Paragraph</Paragraph>
+</Typography>
+        `
+      }
+    }
+  }
 };
 
 // TypographyTitle Story
@@ -130,7 +144,6 @@ export const TypographyTitle = {
     children: "Typography Title",
     ellipsis: true,
     width: "300px"
-
   }
 };
 
