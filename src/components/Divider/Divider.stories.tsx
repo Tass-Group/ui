@@ -76,7 +76,7 @@ export const DefaultDivider = {
 export const VerticalDivider = {
   render: (args: DividerProps) => {
     return (
-      <div style={{ display: "flex", alignItems: "center", height: "15px" }}>
+      <div style={{ display: "flex", alignItems: "center", height: "15px", width: "150px", justifyContent: "space-between" }}>
         Text
         <Divider orientation="vertical" {...args}/>
         <a href="#">Link</a>
@@ -92,7 +92,7 @@ export const VerticalDivider = {
     docs: {
       source: {
         code: `
-<div style={{ display: "flex", alignItems: "center", height: "15px" }}>
+<div style={{ display: "flex", alignItems: "center", height: "15px", width: "150px", justifyContent: "space-between" }}>
   Text
   <Divider orientation="vertical" {...args}/>
   <a href="#">Link</a>
@@ -111,15 +111,12 @@ export const VariantDivider = {
       <div style={{ padding: "20px" }}>
         <h3>Solid Divider</h3>
         <Divider {...args} color="blue" variant="solid" orientation="horizontal" />
-        <p>Some text between dividers</p>
 
         <h3>Dashed Divider</h3>
         <Divider {...args} color="green" variant="dashed" orientation="horizontal" />
-        <p>Some more text between dividers</p>
 
         <h3>Dotted Divider</h3>
         <Divider {...args} color="red" variant="dotted" orientation="horizontal" />
-        <p>More content to show dividers</p>
 
         <div style={{ display: "flex", alignItems: "center", height: "100px", marginTop: "20px" }}>
           <p>Vertical Dotted</p>
@@ -134,8 +131,7 @@ export const VariantDivider = {
   },
   args: {
     orientation: "horizontal",
-    color: "rgba(0, 0, 0, 0.12)",
-    variant: "solid"
+    color: "rgba(0, 0, 0, 0.12)"
   },
   parameters: {
     docs: {
@@ -143,24 +139,21 @@ export const VariantDivider = {
         code: `
 <div style={{ padding: "20px" }}>
   <h3>Solid Divider</h3>
-  <Divider color="blue" variant="solid" orientation="horizontal" />
-  <p>Some text between dividers</p>
+  <Divider {...args} color="blue" variant="solid" orientation="horizontal" />
 
   <h3>Dashed Divider</h3>
-  <Divider color="green" variant="dashed" orientation="horizontal" />
-  <p>Some more text between dividers</p>
+  <Divider {...args} color="green" variant="dashed" orientation="horizontal" />
 
   <h3>Dotted Divider</h3>
-  <Divider color="red" variant="dotted" orientation="horizontal" />
-  <p>More content to show dividers</p>
+  <Divider {...args} color="red" variant="dotted" orientation="horizontal" />
 
   <div style={{ display: "flex", alignItems: "center", height: "100px", marginTop: "20px" }}>
     <p>Vertical Dotted</p>
-    <Divider color="purple" variant="dotted" orientation="vertical" />
+    <Divider {...args} color="purple" variant="dotted" orientation="vertical" />
     <p>Vertical Dashed</p>
-    <Divider color="orange" variant="dashed" orientation="vertical" />
+    <Divider {...args} color="orange" variant="dashed" orientation="vertical" />
     <p>Vertical Solid</p>
-    <Divider color="black" variant="solid" orientation="vertical" />
+    <Divider {...args} color="black" variant="solid" orientation="vertical" />
   </div>
 </div>
         `
@@ -172,21 +165,19 @@ export const VariantDivider = {
 export const TextDivider = {
   render: (args: DividerProps) => {
     return (
-      <div>
-        <p>Text on Left:</p>
-        <Divider {...args} text="Left Text" textPosition="left" color="green" orientation="horizontal" />
+      <div style={{ width: "200px" }}>
 
-        <p>Text in Center:</p>
-        <Divider {...args} text="Center Text" textPosition="center" color="purple" orientation="horizontal" />
+        <Divider {...args} text="Left Text" position="left" color="green" />
 
-        <p>Text on Right:</p>
-        <Divider {...args} text="Right Text" textPosition="right" color="orange" orientation="horizontal" />
+        <Divider {...args} text="Center Text" position="center" color="purple" />
+
+        <Divider {...args} text="Right Text" position="right" color="orange" />
 
         <div style={{ display: "flex", alignItems: "center", height: "100px", marginTop: "16px" }}>
-          <p>Vertical Text:</p>
-          <Divider {...args} text="Vertical Center" textPosition="center" color="teal" orientation="vertical" />
+          <Divider {...args} text="Vertical Center" position="center" color="teal" orientation="vertical" />
         </div>
       </div>
+
     );
   },
   args: {
@@ -197,19 +188,12 @@ export const TextDivider = {
     docs: {
       source: {
         code: `
-<div>
-  <p>Text on Left:</p>
-  <Divider text="Left Text" textPosition="left" color="green" orientation="horizontal" />
-
-  <p>Text in Center:</p>
-  <Divider text="Center Text" textPosition="center" color="purple" orientation="horizontal" />
-
-  <p>Text on Right:</p>
-  <Divider text="Right Text" textPosition="right" color="orange" orientation="horizontal" />
-
+<div style={{ width: "200px" }}>
+  <Divider {...args} text="Left Text" textPosition="left" color="green" />
+  <Divider {...args} text="Center Text" textPosition="center" color="purple" />
+  <Divider {...args} text="Right Text" textPosition="right" color="orange" />
   <div style={{ display: "flex", alignItems: "center", height: "100px", marginTop: "16px" }}>
-    <p>Vertical Text:</p>
-    <Divider text="Vertical Center" textPosition="center" color="teal" orientation="vertical" />
+    <Divider {...args} text="Vertical Center" textPosition="center" color="teal" orientation="vertical" />
   </div>
 </div>
         `
