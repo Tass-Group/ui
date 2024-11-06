@@ -2,7 +2,7 @@ import Typography from "./index";
 import { type ParagraphProps, type TextProps, type TitleProps } from "./types";
 
 export default {
-  title: "MyComponents/Typography",
+  title: "Universal/Typography",
   component: Typography,
   parameters: {
     layout: "centered"

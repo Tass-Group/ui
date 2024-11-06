@@ -2,7 +2,7 @@ import IconLabelPage from "./IconLablePage";
 import Icon from "./index";
 
 export default {
-  title: "MyComponents/Icon",
+  title: "Universal/Icon",
   component: Icon,
   parameters: {
     layout: "centered"

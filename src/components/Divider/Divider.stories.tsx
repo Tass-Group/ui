@@ -2,7 +2,7 @@ import Divider from "./index";
 import { type DividerProps } from "./types";
 
 export default {
-  title: "MyComponents/Divider",
+  title: "Layout/Divider",
   component: Divider,
   parameters: {
     layout: "centered"
