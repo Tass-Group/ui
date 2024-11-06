@@ -29,6 +29,12 @@ export default {
         summary: "default"
       }
     },
+    icon: {
+      description: "Button icon",
+      control: {
+        disable: true
+      }
+    },
     color: {
       description: "Button color",
       control: {

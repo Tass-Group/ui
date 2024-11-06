@@ -118,8 +118,8 @@ type ShapeStyles = typeof shapeStyles;
 type ShapeStylesKey = keyof ShapeStyles;
 
 export const StyledButton = styled.button<{ type: TypeStylesKey, disabled?: boolean, color?: string, size: SizeStylesKey, shape: ShapeStylesKey }>`
-  display: inline-block;
-  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
@@ -127,6 +127,7 @@ export const StyledButton = styled.button<{ type: TypeStylesKey, disabled?: bool
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -154,4 +155,11 @@ export const StyledButton = styled.button<{ type: TypeStylesKey, disabled?: bool
   ${({ size }) => sizeStyles[size]}
 
   ${({ shape }) => shapeStyles[shape]}
+
+  .button-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+  }
 `;

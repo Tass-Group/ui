@@ -8,6 +8,7 @@ const Button: React.FC<ButtonProps> = ({
   size = "medium",
   shape = "square",
   disabled = false,
+  icon,
   ...rest
 }) => {
   return (
@@ -18,6 +19,8 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       {...rest}
     >
+      {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
+      {icon && <span className="button-icon">{icon}</span>}
       {title}
     </StyledButton>
   );
