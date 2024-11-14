@@ -4,17 +4,31 @@ import Row from "./Row";
 export default {
   title: "Layout/Grid",
   parameters: {
-    layout: "centered"
+    layout: "fullscreen"
   },
   tags: ["autodocs"],
   argTypes: {
-
+    gutter: {
+      description: "Grid spacing",
+      control: { disable: true },
+      defaultValue: { summary: 0 }
+    },
+    span: {
+      description: "Number of grid placeholders",
+      control: { disable: true },
+      defaultValue: { summary: 24 }
+    },
+    offset: {
+      description: "The number of spacers on the left side of the grid",
+      control: { disable: true },
+      defaultValue: { summary: 0 }
+    }
   }
 };
 
 export const DefaultGrid = {
   render: () => (
-    <>
+    <div style={{ padding: "20px" }}>
       <Row>
         <Col span={24} style={{ backgroundColor: "#f0f0f0", color: "#000" }}>col</Col>
       </Row>
@@ -33,7 +47,7 @@ export const DefaultGrid = {
         <Col span={6} style={{ backgroundColor: "#70a0c0", color: "#fff" }}>col-6</Col>
         <Col span={6} style={{ backgroundColor: "#6090b0", color: "#fff" }}>col-6</Col>
       </Row>
-    </>
+    </div>
   ),
   parameters: {
     docs: {
@@ -65,7 +79,7 @@ export const DefaultGrid = {
 
 export const GridWithGutterNoWrap = {
   render: () => (
-    <>
+    <div style={{ padding: "40px" }}>
       <Row gutter={16}>
         <Col span={6} style={{ backgroundColor: "#90c0e0", color: "#fff", padding: "8px", textAlign: "center" }}>
           col-6
@@ -80,7 +94,7 @@ export const GridWithGutterNoWrap = {
           col-6
         </Col>
       </Row>
-    </>
+    </div>
   ),
   parameters: {
     docs: {
@@ -108,7 +122,7 @@ export const GridWithGutterNoWrap = {
 
 export const GridWithOffset = {
   render: () => (
-    <>
+    <div style={{ padding: "20px" }}>
       <Row>
         <Col span={8} offset={8} style={{ backgroundColor: "#f0f0f0", color: "#000" }}>col-8</Col>
       </Row>
@@ -119,7 +133,7 @@ export const GridWithOffset = {
       <Row>
         <Col span={12} offset={4} style={{ backgroundColor: "#909090", color: "#fff" }}>col-12 col-offset-6</Col>
       </Row>
-    </>
+    </div>
   ),
   parameters: {
     docs: {
