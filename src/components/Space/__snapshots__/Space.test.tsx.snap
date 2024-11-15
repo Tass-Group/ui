@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Space renders children correctly 1`] = `
+<div
+  class="sc-blHHSb txXxJ"
+  direction="horizontal"
+  size="8"
+>
+  <div>
+    Child 1
+  </div>
+  <div>
+    Child 2
+  </div>
+</div>
+`;
