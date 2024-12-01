@@ -34,7 +34,7 @@ const renderMenuItem = (item: MenuItemType): React.ReactNode => {
     <MenuItem
       key={item.key}
       disabled={item.disabled}
-      isdanger={item.isdanger} // 改为 isdanger
+      $isDanger={item.$isDanger}
       onClick={item.onClick}
     >
       {(item.icon != null) && <span className="menu-item-icon">{item.icon}</span>}

@@ -43,7 +43,7 @@ const items = [
     key: "3",
     label: "Danger option",
     icon: <Icon name="trash" size={14} />,
-    isdanger: true
+    $isDanger: true
   },
   {
     key: "submenu",

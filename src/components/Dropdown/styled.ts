@@ -50,24 +50,24 @@ export const MenuContainer = styled.div<{ placement: string }>`
   }}
 `;
 
-export const MenuItem = styled.div<{ disabled?: boolean, isdanger?: boolean }>`
+export const MenuItem = styled.div<{ disabled?: boolean, $isDanger?: boolean }>`
   padding: 8px 12px;
   cursor: ${({ disabled }) => ((disabled ?? false) ? "not-allowed" : "pointer")};
-  color: ${({ disabled, isdanger }) =>
-    (disabled ?? false) ? "rgba(0, 0, 0, 0.25)" : (isdanger ?? false) ? "#ff4d4f" : "rgba(0, 0, 0, 0.85)"};
+  color: ${({ disabled, $isDanger }) =>
+    (disabled ?? false) ? "rgba(0, 0, 0, 0.25)" : ($isDanger ?? false) ? "#ff4d4f" : "rgba(0, 0, 0, 0.85)"};
   transition: all 0.3s;
   display: flex;
   align-items: center;
   gap: 8px;
 
   &:hover {
-    background: ${({ disabled, isdanger }) => {
+    background: ${({ disabled, $isDanger }) => {
       if (disabled ?? false) return "transparent";
-      return (isdanger ?? false) ? "#fff1f0" : "#f5f5f5";
+      return ($isDanger ?? false) ? "#fff1f0" : "#f5f5f5";
     }};
-    color: ${({ disabled, isdanger }) => {
+    color: ${({ disabled, $isDanger }) => {
       if (disabled ?? false) return "rgba(0, 0, 0, 0.25)";
-      return (isdanger ?? false) ? "#ff7875" : "rgba(0, 0, 0, 0.85)";
+      return ($isDanger ?? false) ? "#ff7875" : "rgba(0, 0, 0, 0.85)";
     }};
   }
 `;

@@ -75,4 +75,56 @@ interface DividerProps {
 
 declare const Divider: React$1.FC<DividerProps>;
 
-export { Button, Divider, Icon, Typography };
+interface RowProps extends React.HTMLAttributes<HTMLDivElement> {
+    gutter?: number;
+}
+interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
+    span?: number;
+    gutter?: number;
+    offset?: number;
+}
+
+declare const Row: React$1.FC<RowProps>;
+
+declare const Col: React$1.FC<ColProps>;
+
+interface SpaceProps {
+    children: React.ReactNode;
+    size?: number;
+    direction?: "horizontal" | "vertical";
+}
+
+declare const Space: React$1.FC<SpaceProps>;
+
+interface BreadcrumbItemType {
+    path?: string;
+    title: React.ReactNode;
+}
+interface BreadcrumbProps {
+    items?: BreadcrumbItemType[];
+    separator?: React.ReactNode;
+}
+
+declare const Breadcrumb: React$1.FC<BreadcrumbProps>;
+
+interface MenuItemType {
+    key: string;
+    label: React.ReactNode;
+    icon?: React.ReactNode;
+    disabled?: boolean;
+    isdanger?: boolean;
+    children?: MenuItemType[];
+    onClick?: () => void;
+}
+interface DropdownProps {
+    items: MenuItemType[];
+    trigger?: "hover" | "click";
+    placement?: "top" | "bottom" | "left" | "right";
+    children: React.ReactNode;
+    className?: string;
+    style?: React.CSSProperties;
+}
+
+declare const Dropdown: React$1.FC<DropdownProps>;
+
+export { Breadcrumb, Button, Col, Divider, Dropdown, Icon, Row, Space, Typography };

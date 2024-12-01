@@ -3,7 +3,7 @@ export interface MenuItemType {
   label: React.ReactNode
   icon?: React.ReactNode
   disabled?: boolean
-  isdanger?: boolean
+  $isDanger?: boolean
   children?: MenuItemType[]
   onClick?: () => void
 }

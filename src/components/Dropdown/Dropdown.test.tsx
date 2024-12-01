@@ -16,7 +16,7 @@ const items = [
   {
     key: "3",
     label: "Danger option",
-    isdanger: true
+    $isDanger: true
   }
 ];
 
