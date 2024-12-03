@@ -5,7 +5,7 @@ export declare const MenuContainer: import("styled-components/dist/types").IStyl
 }>> & string;
 export declare const MenuItem: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components/dist/types").Substitute<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, {
     disabled?: boolean | undefined;
-    isdanger?: boolean | undefined;
+    $isDanger?: boolean | undefined;
 }>> & string;
 export declare const SubMenu: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>> & string;
 export declare const SubMenuContent: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>> & string;

@@ -2581,7 +2581,7 @@ const DropdownContainer = dt.div `
   position: relative;
   display: inline-block;
 `;
-const MenuContainer = dt.div `
+const MenuContainer$1 = dt.div `
   position: absolute;
   min-width: 120px;
   background: white;
@@ -2625,25 +2625,25 @@ const MenuContainer = dt.div `
     }
 }}
 `;
-const MenuItem = dt.div `
+const MenuItem$1 = dt.div `
   padding: 8px 12px;
   cursor: ${({ disabled }) => ((disabled ?? false) ? "not-allowed" : "pointer")};
-  color: ${({ disabled, isdanger }) => (disabled ?? false) ? "rgba(0, 0, 0, 0.25)" : (isdanger ?? false) ? "#ff4d4f" : "rgba(0, 0, 0, 0.85)"};
+  color: ${({ disabled, $isDanger }) => (disabled ?? false) ? "rgba(0, 0, 0, 0.25)" : ($isDanger ?? false) ? "#ff4d4f" : "rgba(0, 0, 0, 0.85)"};
   transition: all 0.3s;
   display: flex;
   align-items: center;
   gap: 8px;
 
   &:hover {
-    background: ${({ disabled, isdanger }) => {
+    background: ${({ disabled, $isDanger }) => {
     if (disabled ?? false)
         return "transparent";
-    return (isdanger ?? false) ? "#fff1f0" : "#f5f5f5";
+    return ($isDanger ?? false) ? "#fff1f0" : "#f5f5f5";
 }};
-    color: ${({ disabled, isdanger }) => {
+    color: ${({ disabled, $isDanger }) => {
     if (disabled ?? false)
         return "rgba(0, 0, 0, 0.25)";
-    return (isdanger ?? false) ? "#ff7875" : "rgba(0, 0, 0, 0.85)";
+    return ($isDanger ?? false) ? "#ff7875" : "rgba(0, 0, 0, 0.85)";
 }};
   }
 `;
@@ -2654,7 +2654,7 @@ const SubMenu = dt.div `
     display: block;
   }
 `;
-const SubMenuContent = dt.div `
+const SubMenuContent$1 = dt.div `
   display: none;
   position: absolute;
   left: 100%;
@@ -2668,9 +2668,9 @@ const SubMenuContent = dt.div `
 
 const renderMenuItem = (item) => {
     if ((item.children?.length) != null) {
-        return (jsxs(SubMenu, { children: [jsxs(MenuItem, { children: [(item.icon != null) && jsx("span", { className: "menu-item-icon", children: item.icon }), item.label, jsx(Icon, { name: "chevronright", size: 12, style: { marginLeft: "auto" } })] }), jsx(SubMenuContent, { className: "submenu-content", children: item.children.map(child => renderMenuItem(child)) })] }, item.key));
+        return (jsxs(SubMenu, { children: [jsxs(MenuItem$1, { children: [(item.icon != null) && jsx("span", { className: "menu-item-icon", children: item.icon }), item.label, jsx(Icon, { name: "chevronright", size: 12, style: { marginLeft: "auto" } })] }), jsx(SubMenuContent$1, { className: "submenu-content", children: item.children.map(child => renderMenuItem(child)) })] }, item.key));
     }
-    return (jsxs(MenuItem, { disabled: item.disabled, isdanger: item.isdanger, onClick: item.onClick, children: [(item.icon != null) && jsx("span", { className: "menu-item-icon", children: item.icon }), item.label] }, item.key));
+    return (jsxs(MenuItem$1, { disabled: item.disabled, "$isDanger": item.$isDanger, onClick: item.onClick, children: [(item.icon != null) && jsx("span", { className: "menu-item-icon", children: item.icon }), item.label] }, item.key));
 };
 const Dropdown = ({ items, trigger = "hover", placement = "bottom", children, className, style }) => {
     const [visible, setVisible] = useState(false);
@@ -2706,8 +2706,174 @@ const Dropdown = ({ items, trigger = "hover", placement = "bottom", children, cl
             setVisible(false);
         }
     };
-    return (jsxs(DropdownContainer, { ref: containerRef, className: className, style: style, onClick: handleTrigger, onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, children: [children, visible && (jsx(MenuContainer, { placement: placement, children: items.map(item => renderMenuItem(item)) }))] }));
+    return (jsxs(DropdownContainer, { ref: containerRef, className: className, style: style, onClick: handleTrigger, onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, children: [children, visible && (jsx(MenuContainer$1, { placement: placement, children: items.map(item => renderMenuItem(item)) }))] }));
 };
 
-export { Breadcrumb, Button, Col, Divider, Dropdown, Icon, Row, Space, Typography };
+const darkTheme = {
+    background: "#000c17",
+    textColor: "rgba(255, 255, 255, 0.85)",
+    textColorSelected: "#1677FF",
+    textColorHover: "#1677FF",
+    textColorDisabled: "rgba(255, 255, 255, 0.25)",
+    itemSelectedBg: "rgba(22, 119, 255, 0.1)",
+    itemHoverBg: "rgba(255, 255, 255, 0.04)",
+    subMenuBg: "#000c17",
+    borderColor: "#16253a"
+};
+const MenuContainer = dt.ul `
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: ${({ menuTheme }) => menuTheme === "dark" ? darkTheme.background : "#fff"};
+  
+  ${({ mode, menuTheme }) => mode === "horizontal"
+    ? lt `
+          display: flex;
+          border-bottom: 1px solid ${menuTheme === "dark" ? darkTheme.borderColor : "#f0f0f0"};
+          width: 100%;
+          
+          > li, > div > li {
+            padding: 0 20px;
+            height: 46px;
+            line-height: 46px;
+            background: transparent !important;
+
+            &::after {
+              content: "";
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: -1px;
+              height: 2px;
+              background: transparent;
+              transition: all 0.3s;
+            }
+          }
+          
+          ${SubMenuContent} {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 160px;
+            background: ${menuTheme === "dark" ? darkTheme.background : "#fff"};
+            box-shadow: ${menuTheme === "dark"
+        ? "0 2px 8px rgba(0, 0, 0, 0.45)"
+        : "0 3px 6px -4px rgba(0,0,0,.12), 0 6px 16px 0 rgba(0,0,0,.08)"};
+          }
+        `
+    : lt `
+          width: 200px;
+          border-right: 1px solid ${menuTheme === "dark" ? darkTheme.borderColor : "#f0f0f0"};
+        `}
+`;
+const MenuItem = dt.li `
+  position: relative;
+  padding: 12px 20px;
+  cursor: ${({ disabled }) => (disabled === true ? "not-allowed" : "pointer")};
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  
+  ${({ menuTheme, disabled, selected, isSubmenu }) => menuTheme === "dark"
+    ? lt `
+          color: ${(disabled ?? false)
+        ? darkTheme.textColorDisabled
+        : (selected ?? false)
+            ? darkTheme.textColorSelected
+            : darkTheme.textColor};
+          
+          &:hover {
+            ${!(disabled ?? false) && lt `
+              color: ${darkTheme.textColorHover};
+              background: ${darkTheme.itemHoverBg};
+            `}
+          }
+          
+          ${(selected ?? false) && !(isSubmenu ?? false) && lt `
+            background: ${darkTheme.itemSelectedBg};
+            font-weight: 500;
+          `}
+
+          .menu-item-icon {
+            color: inherit;
+          }
+        `
+    : lt `
+          color: ${(disabled ?? false)
+        ? "rgba(0, 0, 0, 0.25)"
+        : (selected ?? false)
+            ? "#1890ff"
+            : "rgba(0, 0, 0, 0.85)"};
+              
+          &:hover {
+            ${!(disabled ?? false) && lt `
+              color: #1890ff;
+              background: ${(menuTheme ?? "horizontal") === "horizontal" ? "transparent" : "#f5f5f5"};
+            `}
+          }
+          
+          ${(selected ?? false) && !(isSubmenu ?? false) && lt `
+            background: #e6f7ff;
+          `}
+        `}
+
+  .submenu-arrow {
+    margin-left: auto;
+    transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    ${({ isOpen }) => (isOpen ?? false) && "transform: rotate(180deg);"}
+    color: inherit;
+  }
+`;
+const SubMenuContent = dt.div `
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transform-origin: top;
+  transform: ${({ isOpen }) => ((isOpen ?? false) ? "scaleY(1)" : "scaleY(0)")};
+  opacity: ${({ isOpen }) => ((isOpen ?? false) ? 1 : 0)};
+`;
+const SubMenuContainer = dt.div `
+  position: relative;
+`;
+
+const Menu = ({ items, mode = "vertical", menuTheme = "light", defaultSelectedKey, defaultOpenKeys = [], className, style }) => {
+    const [selectedKey, setSelectedKey] = useState(defaultSelectedKey ?? "");
+    const [openKeys, setOpenKeys] = useState(defaultOpenKeys);
+    const toggleSubMenu = (key, e) => {
+        e.stopPropagation();
+        if (openKeys.includes(key)) {
+            setOpenKeys(prev => prev.filter(k => k !== key));
+        }
+        else {
+            setOpenKeys([key]);
+        }
+    };
+    const handleSelect = (key, onClick, isSubMenuItem) => {
+        setSelectedKey(key);
+        if (!(isSubMenuItem ?? false)) {
+            setOpenKeys([]);
+        }
+        onClick?.();
+    };
+    const renderMenuItem = (item) => {
+        if ((item.children?.length) != null) {
+            const isOpen = openKeys.includes(item.key);
+            const hasSelectedChild = item.children.some(child => child.key === selectedKey);
+            return (jsxs(SubMenuContainer, { children: [jsxs(MenuItem, { menuTheme: menuTheme, isSubmenu: true, isOpen: isOpen, selected: hasSelectedChild, onClick: (e) => { toggleSubMenu(item.key, e); }, children: [(item.icon !== null) && jsx("span", { className: "menu-item-icon", children: item.icon }), item.label, jsx(Icon, { name: "chevrondown", size: 12, className: "submenu-arrow", style: { marginLeft: "auto" } })] }), jsx(SubMenuContent, { isOpen: isOpen, children: item.children.map((child) => (jsxs(MenuItem, { menuTheme: menuTheme, disabled: child.disabled, selected: selectedKey === child.key, onClick: () => {
+                                if (!(child.disabled ?? false)) {
+                                    handleSelect(child.key, child.onClick, true);
+                                }
+                            }, children: [(child.icon !== null) && jsx("span", { className: "menu-item-icon", children: child.icon }), child.label] }, child.key))) })] }, item.key));
+        }
+        return (jsxs(MenuItem, { menuTheme: menuTheme, disabled: item.disabled, selected: selectedKey === item.key, onClick: () => {
+                if (!(item.disabled ?? false)) {
+                    handleSelect(item.key, item.onClick);
+                }
+            }, children: [(item.icon !== null) && jsx("span", { className: "menu-item-icon", children: item.icon }), item.label] }, item.key));
+    };
+    return (jsx(MenuContainer, { mode: mode, menuTheme: menuTheme, className: className, style: style, children: items.map(renderMenuItem) }));
+};
+
+export { Breadcrumb, Button, Col, Divider, Dropdown, Icon, Menu, Row, Space, Typography };
 //# sourceMappingURL=index.js.map

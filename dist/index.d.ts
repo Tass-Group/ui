@@ -107,17 +107,17 @@ interface BreadcrumbProps {
 
 declare const Breadcrumb: React$1.FC<BreadcrumbProps>;
 
-interface MenuItemType {
+interface MenuItemType$1 {
     key: string;
     label: React.ReactNode;
     icon?: React.ReactNode;
     disabled?: boolean;
-    isdanger?: boolean;
-    children?: MenuItemType[];
+    $isDanger?: boolean;
+    children?: MenuItemType$1[];
     onClick?: () => void;
 }
 interface DropdownProps {
-    items: MenuItemType[];
+    items: MenuItemType$1[];
     trigger?: "hover" | "click";
     placement?: "top" | "bottom" | "left" | "right";
     children: React.ReactNode;
@@ -127,4 +127,24 @@ interface DropdownProps {
 
 declare const Dropdown: React$1.FC<DropdownProps>;
 
-export { Breadcrumb, Button, Col, Divider, Dropdown, Icon, Row, Space, Typography };
+interface MenuItemType {
+    key: string;
+    label: React.ReactNode;
+    icon?: React.ReactNode;
+    disabled?: boolean;
+    children?: MenuItemType[];
+    onClick?: () => void;
+}
+interface MenuProps {
+    items: MenuItemType[];
+    mode?: "horizontal" | "vertical";
+    menuTheme?: "light" | "dark";
+    defaultSelectedKey?: string;
+    defaultOpenKeys?: string[];
+    className?: string;
+    style?: React.CSSProperties;
+}
+
+declare const Menu: React$1.FC<MenuProps>;
+
+export { Breadcrumb, Button, Col, Divider, Dropdown, Icon, Menu, Row, Space, Typography };
