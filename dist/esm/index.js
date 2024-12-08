@@ -2577,7 +2577,7 @@ const Breadcrumb = ({ items = [], separator = "/" }) => {
         }) }));
 };
 
-const DropdownContainer = dt.div `
+const DropdownContainer$1 = dt.div `
   position: relative;
   display: inline-block;
 `;
@@ -2706,7 +2706,7 @@ const Dropdown = ({ items, trigger = "hover", placement = "bottom", children, cl
             setVisible(false);
         }
     };
-    return (jsxs(DropdownContainer, { ref: containerRef, className: className, style: style, onClick: handleTrigger, onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, children: [children, visible && (jsx(MenuContainer$1, { placement: placement, children: items.map(item => renderMenuItem(item)) }))] }));
+    return (jsxs(DropdownContainer$1, { ref: containerRef, className: className, style: style, onClick: handleTrigger, onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave, children: [children, visible && (jsx(MenuContainer$1, { placement: placement, children: items.map(item => renderMenuItem(item)) }))] }));
 };
 
 const darkTheme = {
@@ -2951,5 +2951,149 @@ const Pagination = ({ current, total, pageSize, onChange, position = "center" })
     return (jsxs(PaginationContainer, { "$position": position, children: [jsx(PageButton, { onClick: () => { handlePageChange(current - 1); }, disabled: current <= 1, children: jsx(Icon, { name: "chevronleft", size: 12 }) }), renderPageNumbers(), jsx(PageButton, { onClick: () => { handlePageChange(current + 1); }, disabled: current >= totalPages, children: jsx(Icon, { name: "chevronright", size: 12 }) })] }));
 };
 
-export { Breadcrumb, Button, Col, Divider, Dropdown, Icon, Menu, Pagination, Row, Space, Typography };
+const CascaderContainer = dt.div `
+  position: relative;
+  display: inline-block;
+`;
+const CascaderInput = dt.div `
+  min-width: 200px;
+  height: 32px;
+  padding: 4px 30px 4px 11px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  cursor: ${({ disabled }) => (disabled ?? false) ? "not-allowed" : "pointer"};
+  display: flex;
+  align-items: center;
+  background: ${({ disabled }) => (disabled ?? false) ? "#f5f5f5" : "#fff"};
+  opacity: ${({ disabled }) => (disabled ?? false) ? 0.6 : 1};
+
+  .label {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: ${({ disabled }) => (disabled ?? false) ? "rgba(0, 0, 0, 0.25)" : "rgba(0, 0, 0, 0.85)"};
+  }
+
+  &:hover {
+    border-color: ${({ disabled }) => (disabled ?? false) ? "#d9d9d9" : "#40a9ff"};
+  }
+`;
+const DropdownContainer = dt.div `
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  display: flex;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1050;
+`;
+const OptionList = dt.ul `
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  min-width: 120px;
+  border-right: 1px solid #f0f0f0;
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+const OptionItem = dt.li `
+  padding: 5px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: ${({ disabled }) => (disabled ?? false) ? "not-allowed" : "pointer"};
+  color: ${({ disabled }) => (disabled ?? false) ? "rgba(0, 0, 0, 0.25)" : "rgba(0, 0, 0, 0.85)"};
+  background: ${({ selected }) => (selected ?? false) ? "#e6f7ff" : "transparent"};
+  opacity: ${({ disabled }) => (disabled ?? false) ? 0.6 : 1};
+
+  &:hover {
+    background: ${({ disabled }) => (disabled ?? false) ? "transparent" : "#f5f5f5"};
+  }
+`;
+const ArrowIcon = dt.span `
+  position: absolute;
+  right: 11px;
+  color: rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s;
+  transform: ${({ $visible }) => $visible ? "rotate(180deg)" : "rotate(0)"};
+`;
+const ClearIcon = dt.span `
+  position: absolute;
+  right: 28px;
+  color: rgba(0, 0, 0, 0.25);
+  
+  &:hover {
+    color: rgba(0, 0, 0, 0.45);
+  }
+`;
+
+const Cascader = ({ options = [], defaultValue, value: propValue, onChange, placeholder = "Please select", disabled = false, allowClear = true, expandTrigger = "click", displayRender = labels => labels.join(" / "), className, style }) => {
+    const [visible, setVisible] = useState(false);
+    const [value, setValue] = useState(propValue ?? defaultValue ?? []);
+    const [activeOptions, setActiveOptions] = useState([options]);
+    const containerRef = useRef(null);
+    // Handle outside clicks
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if ((containerRef.current != null) && !containerRef.current.contains(e.target)) {
+                setVisible(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => { document.removeEventListener("mousedown", handleClickOutside); };
+    }, []);
+    // Update value when prop changes
+    useEffect(() => {
+        if (propValue !== undefined) {
+            setValue(propValue);
+        }
+    }, [propValue]);
+    const getSelectedOptions = (val) => {
+        const result = [];
+        let currentOptions = options;
+        val.forEach(v => {
+            const option = currentOptions.find(o => o.value === v);
+            if (option != null) {
+                result.push(option);
+                currentOptions = option.children ?? [];
+            }
+        });
+        return result;
+    };
+    const handleOptionClick = (option, level) => {
+        if (option.disabled ?? false)
+            return;
+        const newValue = [...value.slice(0, level), option.value];
+        const newActiveOptions = [...activeOptions.slice(0, level + 1)];
+        if ((option.children?.length) != null) {
+            newActiveOptions.push(option.children);
+        }
+        setValue(newValue);
+        setActiveOptions(newActiveOptions);
+        if (((option.children?.length) == null) || (option.isLeaf ?? false)) {
+            setVisible(false);
+            onChange?.(newValue, getSelectedOptions(newValue));
+        }
+    };
+    const handleClear = (e) => {
+        e.stopPropagation();
+        setValue([]);
+        setActiveOptions([options]);
+        onChange?.([], []);
+    };
+    const selectedOptions = getSelectedOptions(value);
+    const displayLabel = displayRender(selectedOptions.map(o => o.label));
+    return (jsxs(CascaderContainer, { ref: containerRef, className: className, style: style, children: [jsxs(CascaderInput, { role: "combobox", "aria-expanded": visible, "aria-haspopup": "listbox", onClick: () => { !disabled && setVisible(!visible); }, disabled: disabled, children: [jsx("span", { className: "label", children: (value.length > 0) ? displayLabel : placeholder }), allowClear && value.length > 0 && !disabled && (jsx(ClearIcon, { onClick: handleClear, children: jsx(Icon, { name: "cross", size: 12 }) })), jsx(ArrowIcon, { "$visible": visible, children: jsx(Icon, { name: "chevrondown", size: 12 }) })] }), visible && (jsx(DropdownContainer, { children: activeOptions.map((options, level) => (jsx(OptionList, { children: options.map(option => (jsxs(OptionItem, { disabled: option.disabled, selected: value[level] === option.value, onMouseEnter: () => {
+                            if (expandTrigger === "hover" && ((option.children?.length) != null)) {
+                                handleOptionClick(option, level);
+                            }
+                        }, onClick: () => { handleOptionClick(option, level); }, children: [jsx("span", { children: option.label }), ((option.children?.length) != null) && (jsx(Icon, { name: "chevronright", size: 12 }))] }, option.value))) }, level))) }))] }));
+};
+
+export { Breadcrumb, Button, Cascader, Col, Divider, Dropdown, Icon, Menu, Pagination, Row, Space, Typography };
 //# sourceMappingURL=index.js.map

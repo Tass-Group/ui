@@ -157,4 +157,27 @@ interface PaginationProps {
 
 declare const Pagination: React$1.FC<PaginationProps>;
 
-export { Breadcrumb, Button, Col, Divider, Dropdown, Icon, Menu, Pagination, Row, Space, Typography };
+interface CascaderOption {
+    value: string | number;
+    label: React.ReactNode;
+    disabled?: boolean;
+    children?: CascaderOption[];
+    isLeaf?: boolean;
+}
+interface CascaderProps {
+    options: CascaderOption[];
+    defaultValue?: Array<string | number>;
+    value?: Array<string | number>;
+    onChange?: (value: Array<string | number>, selectedOptions: CascaderOption[]) => void;
+    placeholder?: string;
+    disabled?: boolean;
+    allowClear?: boolean;
+    className?: string;
+    style?: React.CSSProperties;
+    expandTrigger?: "click" | "hover";
+    displayRender?: (labels: string[]) => React.ReactNode;
+}
+
+declare const Cascader: React$1.FC<CascaderProps>;
+
+export { Breadcrumb, Button, Cascader, Col, Divider, Dropdown, Icon, Menu, Pagination, Row, Space, Typography };
