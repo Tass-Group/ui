@@ -2895,6 +2895,82 @@ const Menu = ({ items, mode = "vertical", menuTheme = "light", defaultSelectedKe
     return (jsxRuntime.jsx(MenuContainer, { mode: mode, menuTheme: menuTheme, className: className, style: style, children: items.map(renderMenuItem) }));
 };
 
+const PaginationContainer = dt.div `
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: ${({ $position }) => {
+    switch ($position) {
+        case "left": return "flex-start";
+        case "right": return "flex-end";
+        default: return "center";
+    }
+}};
+`;
+const PageButton = dt.button `
+  min-width: 32px;
+  height: 32px;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid ${({ active }) => ((active === true) ? "#1890ff" : "#d9d9d9")};
+  background-color: ${({ active }) => ((active === true) ? "#1890ff" : "#ffffff")};
+  color: ${({ active }) => ((active === true) ? "#ffffff" : "rgba(0, 0, 0, 0.85)")};
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 2px;
+  outline: none;
+  user-select: none;
+
+  &:hover:not(:disabled) {
+    color: #1890ff;
+    border-color: #1890ff;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: rgba(0, 0, 0, 0.25);
+    border-color: #d9d9d9;
+    background-color: #f5f5f5;
+  }
+
+  &:active:not(:disabled) {
+    color: #096dd9;
+    border-color: #096dd9;
+  }
+`;
+const Ellipsis = dt.span `
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  color: rgba(0, 0, 0, 0.45);
+`;
+
+const Pagination = ({ current, total, pageSize, onChange, position = "center" }) => {
+    const totalPages = Math.ceil(total / pageSize);
+    const handlePageChange = (page) => {
+        if (page >= 1 && page <= totalPages) {
+            onChange(page);
+        }
+    };
+    const renderPageNumbers = () => {
+        const pages = [];
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || (i >= current - 2 && i <= current + 2)) {
+                pages.push(jsxRuntime.jsx(PageButton, { active: current === i, onClick: () => { handlePageChange(i); }, children: i }, i));
+            }
+            else if (i === current - 3 || i === current + 3) {
+                pages.push(jsxRuntime.jsx(Ellipsis, { children: "..." }, `ellipsis-${i}`));
+            }
+        }
+        return pages;
+    };
+    return (jsxRuntime.jsxs(PaginationContainer, { "$position": position, children: [jsxRuntime.jsx(PageButton, { onClick: () => { handlePageChange(current - 1); }, disabled: current <= 1, children: jsxRuntime.jsx(Icon, { name: "chevronleft", size: 12 }) }), renderPageNumbers(), jsxRuntime.jsx(PageButton, { onClick: () => { handlePageChange(current + 1); }, disabled: current >= totalPages, children: jsxRuntime.jsx(Icon, { name: "chevronright", size: 12 }) })] }));
+};
+
 exports.Breadcrumb = Breadcrumb;
 exports.Button = Button;
 exports.Col = Col;
@@ -2902,6 +2978,7 @@ exports.Divider = Divider;
 exports.Dropdown = Dropdown;
 exports.Icon = Icon;
 exports.Menu = Menu;
+exports.Pagination = Pagination;
 exports.Row = Row;
 exports.Space = Space;
 exports.Typography = Typography;

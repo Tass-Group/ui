@@ -147,4 +147,14 @@ interface MenuProps {
 
 declare const Menu: React$1.FC<MenuProps>;
 
-export { Breadcrumb, Button, Col, Divider, Dropdown, Icon, Menu, Row, Space, Typography };
+interface PaginationProps {
+    current: number;
+    total: number;
+    pageSize: number;
+    onChange: (page: number) => void;
+    position?: "left" | "center" | "right";
+}
+
+declare const Pagination: React$1.FC<PaginationProps>;
+
+export { Breadcrumb, Button, Col, Divider, Dropdown, Icon, Menu, Pagination, Row, Space, Typography };
