@@ -1,0 +1,13 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import Input from ".";
+declare const meta: Meta<typeof Input>;
+export default meta;
+export declare const Default: StoryObj<typeof Input>;
+export declare const Sizes: StoryObj<typeof Input>;
+export declare const WithPrefix: StoryObj<typeof Input>;
+export declare const WithSuffix: StoryObj<typeof Input>;
+export declare const Clearable: StoryObj<typeof Input>;
+export declare const Disabled: StoryObj<typeof Input>;
+export declare const Status: StoryObj<typeof Input>;
+export declare const Group: StoryObj<typeof Input.Group>;
+export declare const TextArea: StoryObj<typeof Input.TextArea>;

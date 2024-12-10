@@ -36,7 +36,20 @@ export const Sizes: StoryObj<typeof Input> = {
       <Input size="middle" placeholder="Default size" />
       <Input size="small" placeholder="Small size" />
     </div>
-  )
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+  <Input size="large" placeholder="Large size" />
+  <Input size="middle" placeholder="Default size" />
+  <Input size="small" placeholder="Small size" />
+</div>
+        `
+      }
+    }
+  }
 };
 
 export const WithPrefix: StoryObj<typeof Input> = {
@@ -73,7 +86,19 @@ export const Status: StoryObj<typeof Input> = {
       <Input status="error" placeholder="Error status" />
       <Input status="warning" placeholder="Warning status" />
     </div>
-  )
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+  <Input status="error" placeholder="Error status" />
+  <Input status="warning" placeholder="Warning status" />
+</div>
+        `
+      }
+    }
+  }
 };
 
 export const Group: StoryObj<typeof Input.Group> = {
@@ -82,7 +107,19 @@ export const Group: StoryObj<typeof Input.Group> = {
       <Input style={{ width: "20%" }} defaultValue="0571" />
       <Input style={{ width: "30%" }} defaultValue="26888888" />
     </Input.Group>
-  )
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<Input.Group compact>
+  <Input style={{ width: "20%" }} defaultValue="0571" />
+  <Input style={{ width: "30%" }} defaultValue="26888888" />
+</Input.Group>
+        `
+      }
+    }
+  }
 };
 
 export const TextArea: StoryObj<typeof Input.TextArea> = {
@@ -95,5 +132,17 @@ export const TextArea: StoryObj<typeof Input.TextArea> = {
         placeholder="With character count"
       />
     </div>
-  )
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: `
+<div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+  <Input.TextArea placeholder="Basic usage" />
+  <Input.TextArea showCount maxLength={100} placeholder="With character count" />
+</div>
+        `
+      }
+    }
+  }
 };
