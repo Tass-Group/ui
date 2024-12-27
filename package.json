@@ -99,5 +99,10 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "dayjs": "^1.11.13",
+    "react-use": "^17.6.0"
   }
 }
