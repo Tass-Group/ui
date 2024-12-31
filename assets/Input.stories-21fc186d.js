@@ -1,4 +1,4 @@
-import{j as i,a as r}from"./jsx-runtime-8a1697f2.js";import{r as V}from"./index-8b3efc3f.js";import{d as u,l as s}from"./styled-components.browser.esm-16342693.js";import{I as $}from"./index-6ca76d44.js";import"./_commonjsHelpers-de833af9.js";const ye=e=>{switch(e){case"small":return s`
+import{j as i,a as r}from"./jsx-runtime-8a1697f2.js";import{r as V}from"./index-8b3efc3f.js";import{d as u,l as s}from"./styled-components.browser.esm-16342693.js";import{I as $}from"./index-c9f9c958.js";import"./_commonjsHelpers-de833af9.js";const ye=e=>{switch(e){case"small":return s`
         padding: 0 7px;
         font-size: 14px;
         line-height: 24px;
