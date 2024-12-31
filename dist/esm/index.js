@@ -1156,7 +1156,7 @@ const Icon = ({ name, size = 16, color = "currentColor", className = "", style =
             fontSize: size,
             color,
             ...style
-        }, onClick: onClick }));
+        }, role: "img", "aria-label": name, onClick: onClick }));
 };
 
 const StyledDivider = dt.div `
@@ -3095,5 +3095,300 @@ const Cascader = ({ options = [], defaultValue, value: propValue, onChange, plac
                         }, onClick: () => { handleOptionClick(option, level); }, children: [jsx("span", { children: option.label }), ((option.children?.length) != null) && (jsx(Icon, { name: "chevronright", size: 12 }))] }, option.value))) }, level))) }))] }));
 };
 
-export { Breadcrumb, Button, Cascader, Col, Divider, Dropdown, Icon, Menu, Pagination, Row, Space, Typography };
+// Unique ID creation requires a high quality random # generator. In the browser we therefore
+// require the crypto API and do not support built-in fallback to lower quality random number
+// generators (like Math.random()).
+let getRandomValues;
+const rnds8 = new Uint8Array(16);
+function rng() {
+  // lazy load so that environments that need to polyfill have a chance to do so
+  if (!getRandomValues) {
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
+    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
+
+    if (!getRandomValues) {
+      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+    }
+  }
+
+  return getRandomValues(rnds8);
+}
+
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+
+const byteToHex = [];
+
+for (let i = 0; i < 256; ++i) {
+  byteToHex.push((i + 0x100).toString(16).slice(1));
+}
+
+function unsafeStringify(arr, offset = 0) {
+  // Note: Be careful editing this code!  It's been tuned for performance
+  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
+  return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
+}
+
+const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+var native = {
+  randomUUID
+};
+
+function v4(options, buf, offset) {
+  if (native.randomUUID && !buf && !options) {
+    return native.randomUUID();
+  }
+
+  options = options || {};
+  const rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+
+  rnds[6] = rnds[6] & 0x0f | 0x40;
+  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
+
+  return unsafeStringify(rnds);
+}
+
+const UploadContainer = dt.div `
+  display: inline-block;
+`;
+const UploadInput = dt.input `
+  display: none;
+`;
+const UploadButton = dt.div `
+  ${({ listType }) => listType === "picture-card" &&
+    lt `
+      width: 160px;
+      height: 160px;
+      border: 1px dashed #d9d9d9;
+      border-radius: 8px;
+      background: #fafafa;
+      cursor: pointer;
+      transition: border-color 0.3s;
+
+      &:hover {
+        border-color: #1890ff;
+      }
+
+      .upload-card-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+
+        .icon {
+          margin-bottom: 8px;
+        }
+
+        .upload-text {
+          font-size: 14px;
+        }
+      }
+    `}
+
+  ${({ disabled }) => (disabled ?? false) &&
+    lt `
+      cursor: not-allowed;
+      opacity: 0.5;
+      
+      &:hover {
+        border-color: #d9d9d9 !important;
+      }
+      
+      * {
+        pointer-events: none;
+      }
+    `}
+`;
+const UploadList = dt.div `
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+`;
+const UploadListItem = dt.div `
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: #fafafa;
+  border-radius: 4px;
+  
+  &:hover {
+    background: #f0f0f0;
+  }
+  
+  ${({ listType }) => (listType === "picture" || listType === "picture-card") &&
+    lt `
+      width: 160px;
+      height: 160px;
+      border: 1px solid #d9d9d9;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+
+      .upload-item-image {
+        width: 100%;
+        height: 100%;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .upload-item-actions {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        opacity: 0;
+        transition: opacity 0.3s;
+
+        .action-icon {
+          color: white;
+          font-size: 20px;
+          cursor: pointer;
+          padding: 8px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.1);
+          transition: all 0.2s;
+
+          &:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+          }
+        }
+      }
+
+      &:hover .upload-item-actions {
+        opacity: 1;
+      }
+    `}
+
+  ${({ listType }) => listType === "text" &&
+    lt `
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      background: #fafafa;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background: #f0f0f0;
+      }
+
+      .upload-item-info {
+        flex: 1;
+        margin: 0 8px;
+        
+        .upload-item-name {
+          color: #333;
+          font-size: 14px;
+        }
+      }
+
+      .icon {
+        &:last-child {
+          margin-left: 8px;
+          transition: all 0.2s;
+          
+          &:hover {
+            transform: scale(1.1);
+            color: #ff4d4f !important;
+          }
+        }
+      }
+    `}
+`;
+dt.div `
+  width: 100%;
+  height: 2px;
+  background-color: #f0f0f0;
+  border-radius: 2px;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: ${({ percent }) => percent}%;
+    background-color: #1890ff;
+    transition: width 0.3s;
+  }
+`;
+
+const Upload = ({ accept, multiple = false, disabled = false, listType = "text", defaultFileList = [], fileList: propFileList, onChange, onRemove, children, className, style }) => {
+    const [fileList, setFileList] = useState(propFileList ?? defaultFileList);
+    const inputRef = useRef(null);
+    const handleClick = () => {
+        if (disabled)
+            return;
+        inputRef.current?.click();
+    };
+    const handleRemove = async (file) => {
+        const remove = onRemove?.(file);
+        if (remove !== false) {
+            setFileList(prev => prev.filter(item => item.uid !== file.uid));
+        }
+    };
+    const handleChange = (e) => {
+        const { files } = e.target;
+        if (files == null)
+            return;
+        const uploadFiles = Array.from(files).map(file => ({
+            uid: v4(),
+            name: file.name,
+            status: "done",
+            size: file.size,
+            type: file.type,
+            percent: 100,
+            originFileObj: file,
+            url: URL.createObjectURL(file),
+            thumbUrl: URL.createObjectURL(file)
+        }));
+        setFileList(prev => [...prev, ...uploadFiles]);
+        uploadFiles.forEach(file => {
+            onChange?.({ file, fileList: [...fileList, ...uploadFiles] });
+        });
+        e.target.value = "";
+    };
+    const renderUploadButton = () => {
+        if (children != null)
+            return children;
+        if (listType === "picture-card") {
+            return (jsxs("div", { className: "upload-card-content", children: [jsx(Icon, { name: "pluscircle", size: 24 }), jsx("div", { className: "upload-text", children: "Upload" })] }));
+        }
+        return (jsx(Button, { icon: jsx(Icon, { name: "upload" }), title: "Upload" }));
+    };
+    return (jsxs(UploadContainer, { className: className, style: style, children: [jsx(UploadButton, { onClick: handleClick, disabled: disabled, listType: listType, className: disabled ? "disabled" : "", children: renderUploadButton() }), jsx(UploadInput, { ref: inputRef, "data-testid": "upload-input", type: "file", accept: accept, multiple: multiple, onChange: handleChange, style: { display: "none" } }), jsx(UploadList, { listType: listType, children: fileList.map(file => (jsx(UploadListItem, { listType: listType, children: listType === "picture" || listType === "picture-card"
+                        ? (jsxs(Fragment, { children: [jsx("div", { className: "upload-item-image", children: (file.url != null)
+                                        ? (jsx("img", { src: file.url, alt: file.name }))
+                                        : (jsx(Icon, { name: "file", size: 30 })) }), jsxs("div", { className: "upload-item-actions", children: [jsx(Icon, { name: "eye", className: "action-icon", onClick: () => {
+                                                if (file.url != null) {
+                                                    window.open(file.url, "_blank");
+                                                }
+                                            } }), jsx(Icon, { name: "trash", className: "action-icon", onClick: () => { void handleRemove(file); } })] })] }))
+                        : (jsxs(Fragment, { children: [jsx(Icon, { name: "link", size: 16, style: {
+                                        color: file.status === "error" ? "#ff4d4f" : "#999",
+                                        marginRight: 8
+                                    } }), jsx("div", { className: "upload-item-info", children: jsx("span", { className: "upload-item-name", children: file.name }) }), jsx(Icon, { name: "trash", style: {
+                                        color: file.status === "error" ? "#ff4d4f" : "#999",
+                                        cursor: "pointer"
+                                    }, onClick: () => { void handleRemove(file); } })] })) }, file.uid))) })] }));
+};
+
+export { Breadcrumb, Button, Cascader, Col, Divider, Dropdown, Icon, Menu, Pagination, Row, Space, Typography, Upload };
 //# sourceMappingURL=index.js.map

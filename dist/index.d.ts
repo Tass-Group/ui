@@ -180,4 +180,56 @@ interface CascaderProps {
 
 declare const Cascader: React$1.FC<CascaderProps>;
 
-export { Breadcrumb, Button, Cascader, Col, Divider, Dropdown, Icon, Menu, Pagination, Row, Space, Typography };
+interface UploadFile {
+    uid: string;
+    name: string;
+    status?: "uploading" | "done" | "error";
+    url?: string;
+    thumbUrl?: string;
+    size?: number;
+    type?: string;
+    percent?: number;
+    error?: Error;
+    response?: any;
+    originFileObj?: File;
+}
+interface UploadProps {
+    accept?: string;
+    action?: string;
+    method?: "POST" | "PUT";
+    multiple?: boolean;
+    name?: string;
+    data?: Record<string, any> | ((file: File) => Record<string, any>);
+    headers?: Record<string, string>;
+    withCredentials?: boolean;
+    disabled?: boolean;
+    listType?: "text" | "picture" | "picture-card";
+    defaultFileList?: UploadFile[];
+    fileList?: UploadFile[];
+    maxCount?: number;
+    onChange?: (info: {
+        file: UploadFile;
+        fileList: UploadFile[];
+    }) => void;
+    onRemove?: (file: UploadFile) => boolean | Promise<boolean> | undefined;
+    beforeUpload?: (file: File, fileList: File[]) => boolean | Promise<Blob | File | undefined>;
+    customRequest?: (options: UploadRequestOption) => void;
+    children?: React.ReactNode;
+    className?: string;
+    style?: React.CSSProperties;
+}
+interface UploadRequestOption {
+    action: string;
+    filename: string;
+    file: File;
+    data: Record<string, any>;
+    headers: Record<string, string>;
+    withCredentials: boolean;
+    onProgress: (percent: number) => void;
+    onSuccess: (response: any) => void;
+    onError: (error: Error) => void;
+}
+
+declare const Upload: React$1.FC<UploadProps>;
+
+export { Breadcrumb, Button, Cascader, Col, Divider, Dropdown, Icon, Menu, Pagination, Row, Space, Typography, Upload };
