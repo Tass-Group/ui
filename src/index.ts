@@ -12,3 +12,4 @@ export { default as Dropdown } from "./components/Dropdown";
 export { default as Menu } from "./components/Menu";
 export { default as Pagination } from "./components/Pagination";
 export { default as Cascader } from "./components/Cascader";
+export { default as Upload } from "./components/Upload";

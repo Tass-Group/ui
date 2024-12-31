@@ -17,6 +17,8 @@ const Icon: React.FC<IconProps> = ({
         color,
         ...style
       }}
+      role="img"
+      aria-label={name}
       onClick={onClick}
     />
   );

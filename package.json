@@ -1,5 +1,5 @@
 {
-  "name": "tass-components",
+  "name": "@tass-group/ui",
   "version": "0.0.3",
   "description": "a react component library",
   "main": "dist/cjs/index.js",
