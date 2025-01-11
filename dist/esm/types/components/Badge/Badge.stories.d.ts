@@ -1,0 +1,11 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import Badge from ".";
+declare const meta: Meta<typeof Badge>;
+export default meta;
+type Story = StoryObj<typeof Badge>;
+export declare const Basic: Story;
+export declare const Standalone: Story;
+export declare const Dot: Story;
+export declare const Status: Story;
+export declare const CustomColor: Story;
+export declare const Ribbon: Story;
