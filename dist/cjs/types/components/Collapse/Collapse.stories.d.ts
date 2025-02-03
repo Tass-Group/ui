@@ -1,0 +1,10 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import Collapse from ".";
+declare const meta: Meta<typeof Collapse>;
+export default meta;
+type Story = StoryObj<typeof Collapse>;
+export declare const Basic: Story;
+export declare const Accordion: Story;
+export declare const Borderless: Story;
+export declare const Ghost: Story;
+export declare const CustomExpandIcon: Story;
