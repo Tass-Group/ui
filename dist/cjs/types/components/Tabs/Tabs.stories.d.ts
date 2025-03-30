@@ -1,0 +1,12 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import Tabs from ".";
+declare const meta: Meta<typeof Tabs>;
+export default meta;
+type Story = StoryObj<typeof Tabs>;
+export declare const Basic: Story;
+export declare const WithIcons: Story;
+export declare const Card: Story;
+export declare const EditableCard: Story;
+export declare const Centered: Story;
+export declare const DifferentSizes: Story;
+export declare const TabModes: Story;

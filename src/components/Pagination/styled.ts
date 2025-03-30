@@ -13,16 +13,16 @@ export const PaginationContainer = styled.div<{ $position?: "left" | "center" | 
   }};
 `;
 
-export const PageButton = styled.button<{ active?: boolean }>`
+export const PageButton = styled.button<{ $active?: boolean }>`
   min-width: 32px;
   height: 32px;
   padding: 4px 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${({ active }) => ((active === true) ? "#1890ff" : "#d9d9d9")};
-  background-color: ${({ active }) => ((active === true) ? "#1890ff" : "#ffffff")};
-  color: ${({ active }) => ((active === true) ? "#ffffff" : "rgba(0, 0, 0, 0.85)")};
+  border: 1px solid ${({ $active }) => ((($active === true)) ? "#1890ff" : "#d9d9d9")};
+  background-color: ${({ $active }) => ((($active === true)) ? "#1890ff" : "#ffffff")};
+  color: ${({ $active }) => ((($active === true)) ? "#ffffff" : "rgba(0, 0, 0, 0.85)")};
   cursor: pointer;
   transition: all 0.3s;
   border-radius: 2px;

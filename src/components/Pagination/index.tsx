@@ -19,7 +19,7 @@ const Pagination: React.FC<PaginationProps> = ({ current, total, pageSize, onCha
         pages.push(
           <PageButton
             key={i}
-            active={current === i}
+            $active={current === i}
             onClick={() => { handlePageChange(i); }}
           >
             {i}

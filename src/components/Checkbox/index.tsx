@@ -36,7 +36,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     <CheckboxWrapper
       className={className}
       style={style}
-      disabled={disabled}
+      $disabled={disabled}
     >
       <HiddenInput
         type="checkbox"
@@ -45,9 +45,9 @@ export const Checkbox: React.FC<CheckboxProps> = ({
         onChange={handleChange}
       />
       <CheckboxInner
-        checked={checked}
-        disabled={disabled}
-        indeterminate={indeterminate}
+        $checked={checked}
+        $disabled={disabled}
+        $indeterminate={indeterminate}
       />
       {children !== undefined && <Label>{children}</Label>}
     </CheckboxWrapper>
