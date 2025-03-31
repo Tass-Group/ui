@@ -1,4 +1,4 @@
-import{j as t}from"./jsx-runtime-Cf8x2fCZ.js";import{r as D}from"./index-BlmOqGMO.js";import{l as r,d as s}from"./styled-components.browser.esm-BgH1a_-m.js";import{B as o}from"./index-Bmy7Hsvv.js";import"./index-yBjzXJbu.js";const M=e=>{switch(e){case"top":return r`
+import{j as t}from"./jsx-runtime-Cf8x2fCZ.js";import{r as D}from"./index-BlmOqGMO.js";import{l as r,d as s}from"./styled-components.browser.esm-BgH1a_-m.js";import{B as o}from"./index-CpRKoA3N.js";import"./index-yBjzXJbu.js";const M=e=>{switch(e){case"top":return r`
         bottom: 100%;
         left: 50%;
         transform: translateX(-50%) translateY(-10px);
