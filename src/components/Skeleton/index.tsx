@@ -1,31 +1,62 @@
 import type React from "react";
-import styled, { css, keyframes } from "styled-components";
+import { type SkeletonProps } from "./types";
+import {
+  SkeletonAvatar,
+  SkeletonContent,
+  SkeletonParagraph,
+  SkeletonTitle
+} from "./styled";
 
-interface SkeletonProps {
-  loading?: boolean
-  active?: boolean
-  children?: React.ReactNode
-}
-
-const shimmer = keyframes`
-  0% { background-position: 100% 50%; }
-  100% { background-position: 0 50%; }
-`;
-
-const SkeletonBlock = styled.div<{ $active?: boolean }>`
-  background: linear-gradient(
-    90deg,
-    #f2f2f2 25%,
-    #e6e6e6 37%,
-    #f2f2f2 63%
-  );
-  background-size: 400% 100%;
-  animation: ${props => (props.$active ?? false) ? css`${shimmer} 1.4s ease infinite` : "none"};
-`;
-
-const Skeleton: React.FC<SkeletonProps> = ({ loading = true, active, children }) => {
+const Skeleton: React.FC<SkeletonProps> = ({
+  loading = true,
+  active,
+  children,
+  avatar = false,
+  title = true,
+  paragraph = true,
+  round
+}) => {
   if (!loading) return <>{children}</>;
-  return <SkeletonBlock data-testid="skeleton" $active={active} />;
+
+  const avatarProps = typeof avatar === "object" ? avatar : {};
+  const titleProps = typeof title === "object" ? title : {};
+  const paragraphProps = typeof paragraph === "object" ? paragraph : {};
+
+  const showAvatar = avatar === true || typeof avatar === "object";
+  const showTitle = title === true || typeof title === "object";
+  const showParagraph = paragraph === true || typeof paragraph === "object";
+
+  return (
+    <SkeletonContent $round={round}>
+      {showAvatar && (
+        <SkeletonAvatar
+          $size={avatarProps.size}
+          $shape={avatarProps.shape}
+          $active={active}
+        />
+      )}
+      <div style={{ width: "100%" }}>
+        {showTitle && (
+          <SkeletonTitle
+            $width={titleProps.width}
+            $active={active}
+          />
+        )}
+        {showParagraph && (
+          <>
+            {Array.from({ length: paragraphProps.rows ?? 1 }).map((_, index) => (
+              <SkeletonParagraph
+                key={index}
+                $rows={index}
+                $width={paragraphProps.width}
+                $active={active}
+              />
+            ))}
+          </>
+        )}
+      </div>
+    </SkeletonContent>
+  );
 };
 
 export default Skeleton;
