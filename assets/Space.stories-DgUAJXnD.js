@@ -1,4 +1,4 @@
-import{j as e}from"./jsx-runtime-Cf8x2fCZ.js";import{d as B}from"./styled-components.browser.esm-BgH1a_-m.js";import{B as r}from"./index-CpRKoA3N.js";import"./index-yBjzXJbu.js";import"./index-BlmOqGMO.js";const S=B.div`
+import{j as e}from"./jsx-runtime-Cf8x2fCZ.js";import{d as B}from"./styled-components.browser.esm-BgH1a_-m.js";import{B as r}from"./index-DjHEwKNG.js";import"./index-yBjzXJbu.js";import"./index-BlmOqGMO.js";const S=B.div`
   display: flex;
   flex-direction: ${({direction:t})=>t==="horizontal"?"row":"column"};
   gap: ${({size:t})=>`${t}px`};
