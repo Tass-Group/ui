@@ -1,0 +1,11 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import Spin from ".";
+declare const meta: Meta<typeof Spin>;
+export default meta;
+type Story = StoryObj<typeof Spin>;
+export declare const Default: Story;
+export declare const WithTip: Story;
+export declare const DifferentSizes: Story;
+export declare const WithChildren: Story;
+export declare const WithDelay: Story;
+export declare const CustomStyle: Story;
